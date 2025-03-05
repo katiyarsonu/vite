@@ -235,4 +235,4 @@ function DraggableSections({ sections, onSectionOrderChange }) {
 //   )
 // }
 
-// export default DraggableSectionsns
+export default DraggableSections

@@ -150,4 +150,89 @@ function DraggableSections({ sections, onSectionOrderChange }) {
   )
 }
 
-export default DraggableSections
+function DraggableSections({ sections, updateSections }) {
+  const [activeId, setActiveId] = useState(null)
+  
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  )
+
+  const handleDragStart = (event) => {
+    setActiveId(event.active.id)
+  }
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event
+    
+    if (over && active.id !== over.id) {
+      const oldIndex = sections.findIndex(item => item.id === active.id)
+      const newIndex = sections.findIndex(item => item.id === over.id)
+      
+      const newSections = arrayMove(sections, oldIndex, newIndex)
+      updateSections(newSections)
+    }
+    
+    setActiveId(null)
+  }
+
+  const handleDragCancel = () => {
+    setActiveId(null)
+  }
+
+  const getActiveItem = () => {
+    const activeItem = sections.find(section => section.id === activeId)
+    return activeItem ? activeItem.title : ''
+  }
+
+  return (
+    <div className="p-4 bg-white rounded-lg">
+      <h2 className="text-xl font-bold mb-4">Reorder Resume Sections</h2>
+      <p className="text-gray-600 mb-4">Drag and drop sections to change their order in your resume.</p>
+      
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <SortableContext 
+          items={sections.map(section => section.id)} 
+          strategy={verticalListSortingStrategy}
+        >
+          <div className="space-y-2">
+            {sections.map(section => (
+              <SortableItem 
+                key={section.id} 
+                id={section.id} 
+                title={section.title} 
+              />
+            ))}
+          </div>
+        </SortableContext>
+        
+        <DragOverlay>
+          {activeId ? <DraggableItem title={getActiveItem()} /> : null}
+        </DragOverlay>
+      </DndContext>
+      
+      <div className="mt-6 text-sm text-gray-500 p-3 bg-blue-50 rounded-md">
+        <p className="font-medium text-blue-700 mb-1">How to reorder sections:</p>
+        <ol className="list-decimal list-inside space-y-1 text-gray-600">
+          <li>Click and hold the drag handle (≡) next to any section</li>
+          <li>Drag the section up or down to its new position</li>
+          <li>Release to drop the section in its new place</li>
+        </ol>
+      </div>
+    </div>
+  )
+}
+
+export default DraggableSectionsns

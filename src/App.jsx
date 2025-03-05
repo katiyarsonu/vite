@@ -62,8 +62,8 @@ function App() {
         }`}
       >
         <header className="bg-white shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">Resume Builder</h1>
+          <div className="max-w-7xl mx-auto px-3 py-3 sm:px-6 sm:py-4 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Resume Builder</h1>
             <TemplateSelector 
               selectedTemplate={selectedTemplate} 
               onTemplateChange={handleTemplateChange}
@@ -73,16 +73,18 @@ function App() {
           </div>
         </header>
         
-        <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-6">
-            <div className="lg:w-1/2">
+        <main className="max-w-7xl mx-auto px-2 sm:px-4 py-4 sm:py-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
+            <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
               <ResumeForm />
             </div>
-            <div className="lg:w-1/2">
-              <ResumePreview 
-                template={selectedTemplate}
-                themeOptions={themeOptions}
-              />
+            <div className="lg:w-1/2 w-full">
+              <div className="sticky top-4">
+                <ResumePreview 
+                  template={selectedTemplate}
+                  themeOptions={themeOptions}
+                />
+              </div>
             </div>
           </div>
         </main>

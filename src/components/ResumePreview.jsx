@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import ModernTemplate from './templates/ModernTemplate'
 import ClassicTemplate from './templates/ClassicTemplate'
 import { usePDF } from 'react-to-pdf'
@@ -6,8 +6,9 @@ import DeployButton from './DeployButton'
 import useResumeStore from '../store/resumeStore'
 
 function ResumePreview({ template, themeOptions }) {
-  const { resumeData, sectionOrder } = useResumeStore()
+  const { resumeData, sectionOrder, activeTargetSection, pageMargins } = useResumeStore()
   const resumeRef = useRef(null)
+  const previewContainerRef = useRef(null)
   const { toPDF, targetRef } = usePDF({
     filename: 'resume.pdf',
     page: { 
@@ -28,6 +29,16 @@ function ResumePreview({ template, themeOptions }) {
     }
   }
 
+  // Effect to scroll to the active target section
+  useEffect(() => {
+    if (activeTargetSection && previewContainerRef.current) {
+      const targetElement = previewContainerRef.current.querySelector(`[data-section-id="${activeTargetSection}"]`);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, [activeTargetSection]);
+
   return (
     <div className="bg-white shadow-md rounded-lg p-6">
       <div className="flex justify-between items-center mb-4">
@@ -43,7 +54,10 @@ function ResumePreview({ template, themeOptions }) {
       </div>
       
       <div 
-        ref={targetRef}
+        ref={(node) => {
+          targetRef(node);
+          previewContainerRef.current = node;
+        }}
         className="resume-preview-container a4"
         style={{
           backgroundColor: themeOptions.backgroundColor,
@@ -52,7 +66,8 @@ function ResumePreview({ template, themeOptions }) {
             ? 'Inter, sans-serif' 
             : themeOptions.fontFamily === 'serif' 
               ? 'Merriweather, serif' 
-              : 'Roboto Mono, monospace'
+              : 'Roboto Mono, monospace',
+          padding: `${pageMargins.top}mm ${pageMargins.right}mm ${pageMargins.bottom}mm ${pageMargins.left}mm`
         }}
       >
         {renderTemplate()}

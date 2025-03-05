@@ -66,6 +66,7 @@ function DraggableItem({ title }) {
 
 function DraggableSections({ sections, onSectionOrderChange }) {
   const [activeId, setActiveId] = useState(null)
+  const { pageMargins, updatePageMargins } = useResumeStore()
   
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -145,6 +146,91 @@ function DraggableSections({ sections, onSectionOrderChange }) {
           <li>Drag the section up or down to its new position</li>
           <li>Release to drop the section in its new place</li>
         </ol>
+      </div>
+      
+      <div className="mt-8 border-t pt-6">
+        <h3 className="text-lg font-semibold mb-4">Page Setup</h3>
+        <div className="space-y-4">
+          <div>
+            <p className="text-sm font-medium text-gray-700 mb-2">Top & Bottom Margins (mm)</p>
+            <div className="flex items-center space-x-4">
+              <div className="flex-1">
+                <label htmlFor="topMargin" className="block text-xs text-gray-500 mb-1">Top</label>
+                <input
+                  id="topMargin"
+                  type="range"
+                  min="0"
+                  max="50"
+                  value={pageMargins.top}
+                  onChange={(e) => updatePageMargins({ top: parseInt(e.target.value) })}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>0</span>
+                  <span>{pageMargins.top} mm</span>
+                  <span>50</span>
+                </div>
+              </div>
+              <div className="flex-1">
+                <label htmlFor="bottomMargin" className="block text-xs text-gray-500 mb-1">Bottom</label>
+                <input
+                  id="bottomMargin"
+                  type="range"
+                  min="0"
+                  max="50"
+                  value={pageMargins.bottom}
+                  onChange={(e) => updatePageMargins({ bottom: parseInt(e.target.value) })}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>0</span>
+                  <span>{pageMargins.bottom} mm</span>
+                  <span>50</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <p className="text-sm font-medium text-gray-700 mb-2">Left & Right Margins (mm)</p>
+            <div className="flex items-center space-x-4">
+              <div className="flex-1">
+                <label htmlFor="leftMargin" className="block text-xs text-gray-500 mb-1">Left</label>
+                <input
+                  id="leftMargin"
+                  type="range"
+                  min="0"
+                  max="50"
+                  value={pageMargins.left}
+                  onChange={(e) => updatePageMargins({ left: parseInt(e.target.value) })}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>0</span>
+                  <span>{pageMargins.left} mm</span>
+                  <span>50</span>
+                </div>
+              </div>
+              <div className="flex-1">
+                <label htmlFor="rightMargin" className="block text-xs text-gray-500 mb-1">Right</label>
+                <input
+                  id="rightMargin"
+                  type="range"
+                  min="0"
+                  max="50"
+                  value={pageMargins.right}
+                  onChange={(e) => updatePageMargins({ right: parseInt(e.target.value) })}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>0</span>
+                  <span>{pageMargins.right} mm</span>
+                  <span>50</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

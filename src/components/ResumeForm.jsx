@@ -6,7 +6,7 @@ import EducationForm from './forms/EducationForm'
 import CustomSectionForm from './forms/CustomSectionForm'
 import DraggableSections from './DraggableSections'
 import { v4 as uuidv4 } from 'uuid'
-import { FaArrowsAlt } from 'react-icons/fa'
+import { FaArrowsAlt, FaEye, FaArrowRight } from 'react-icons/fa'
 import useResumeStore from '../store/resumeStore'
 
 function ResumeForm() {
@@ -57,38 +57,82 @@ function ResumeForm() {
         <>
           <div className="mb-6">
             <div className="flex flex-wrap gap-2 mb-4">
-              <button 
-                className={`btn ${activeSection === 'personalInfo' ? 'btn-primary' : 'btn-secondary'}`}
-                onClick={() => setActiveSection('personalInfo')}
-              >
-                Personal Info
-              </button>
-              <button 
-                className={`btn ${activeSection === 'skills' ? 'btn-primary' : 'btn-secondary'}`}
-                onClick={() => setActiveSection('skills')}
-              >
-                Skills
-              </button>
-              <button 
-                className={`btn ${activeSection === 'experience' ? 'btn-primary' : 'btn-secondary'}`}
-                onClick={() => setActiveSection('experience')}
-              >
-                Experience
-              </button>
-              <button 
-                className={`btn ${activeSection === 'education' ? 'btn-primary' : 'btn-secondary'}`}
-                onClick={() => setActiveSection('education')}
-              >
-                Education
-              </button>
-              {resumeData.customSections.map(section => (
+              <div className="flex items-center">
                 <button 
-                  key={section.id}
-                  className={`btn ${activeSection === `customSection-${section.id}` ? 'btn-primary' : 'btn-secondary'}`}
-                  onClick={() => setActiveSection(`customSection-${section.id}`)}
+                  className={`btn ${activeSection === 'personalInfo' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setActiveSection('personalInfo')}
                 >
-                  {section.title}
+                  Personal Info
                 </button>
+                <button 
+                  onClick={() => useResumeStore.getState().setActiveTargetSection('personalInfo')}
+                  className="ml-1 p-1 text-blue-600 hover:text-blue-800 bg-gray-100 hover:bg-gray-200 rounded"
+                  title="Locate in preview"
+                >
+                  <FaArrowRight size={14} />
+                </button>
+              </div>
+              <div className="flex items-center">
+                <button 
+                  className={`btn ${activeSection === 'skills' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setActiveSection('skills')}
+                >
+                  Skills
+                </button>
+                <button 
+                  onClick={() => useResumeStore.getState().setActiveTargetSection('skills')}
+                  className="ml-1 p-1 text-blue-600 hover:text-blue-800 bg-gray-100 hover:bg-gray-200 rounded"
+                  title="Locate in preview"
+                >
+                  <FaArrowRight size={14} />
+                </button>
+              </div>
+              <div className="flex items-center">
+                <button 
+                  className={`btn ${activeSection === 'experience' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setActiveSection('experience')}
+                >
+                  Experience
+                </button>
+                <button 
+                  onClick={() => useResumeStore.getState().setActiveTargetSection('experience')}
+                  className="ml-1 p-1 text-blue-600 hover:text-blue-800 bg-gray-100 hover:bg-gray-200 rounded"
+                  title="Locate in preview"
+                >
+                  <FaArrowRight size={14} />
+                </button>
+              </div>
+              <div className="flex items-center">
+                <button 
+                  className={`btn ${activeSection === 'education' ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setActiveSection('education')}
+                >
+                  Education
+                </button>
+                <button 
+                  onClick={() => useResumeStore.getState().setActiveTargetSection('education')}
+                  className="ml-1 p-1 text-blue-600 hover:text-blue-800 bg-gray-100 hover:bg-gray-200 rounded"
+                  title="Locate in preview"
+                >
+                  <FaArrowRight size={14} />
+                </button>
+              </div>
+              {resumeData.customSections.map(section => (
+                <div className="flex items-center" key={section.id}>
+                  <button 
+                    className={`btn ${activeSection === `customSection-${section.id}` ? 'btn-primary' : 'btn-secondary'}`}
+                    onClick={() => setActiveSection(`customSection-${section.id}`)}
+                  >
+                    {section.title}
+                  </button>
+                  <button 
+                    onClick={() => useResumeStore.getState().setActiveTargetSection(`customSection-${section.id}`)}
+                    className="ml-1 p-1 text-blue-600 hover:text-blue-800 bg-gray-100 hover:bg-gray-200 rounded"
+                    title="Locate in preview"
+                  >
+                    <FaArrowRight size={14} />
+                  </button>
+                </div>
               ))}
               <button 
                 className="btn bg-green-600 text-white hover:bg-green-700"

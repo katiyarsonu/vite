@@ -140,6 +140,83 @@ function CustomSectionForm({ sections, currentSectionId, onChange }) {
                   className="input-field"
                   placeholder="Describe this item"
                 ></textarea>
+                <div className="mt-2 flex gap-2">
+                  <button
+                    type="button"
+                    className="px-3 py-1 bg-purple-600 text-white text-sm rounded hover:bg-purple-700 transition-colors"
+                  >
+                    Generate with AI
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const bullets = item.bullets || [];
+                      const updatedItem = { ...item, bullets: [...bullets, { id: uuidv4(), text: '', checked: true }] };
+                      updateItem(item.id, 'bullets', updatedItem.bullets);
+                    }}
+                    className="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors"
+                  >
+                    Add Bullet
+                  </button>
+                </div>
+                
+                {/* Bullet Points */}
+                {item.bullets && item.bullets.length > 0 && (
+                  <div className="mt-3 space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Bullet Points</label>
+                    {item.bullets.map((bullet, index) => (
+                      <div key={bullet.id} className="flex items-start gap-2">
+                        <input
+                          type="checkbox"
+                          checked={bullet.checked}
+                          onChange={() => {
+                            const updatedBullets = [...item.bullets];
+                            updatedBullets[index] = { ...bullet, checked: !bullet.checked };
+                            updateItem(item.id, 'bullets', updatedBullets);
+                          }}
+                          className="mt-1"
+                        />
+                        <input
+                          type="text"
+                          value={bullet.text}
+                          onChange={(e) => {
+                            const updatedBullets = [...item.bullets];
+                            updatedBullets[index] = { ...bullet, text: e.target.value };
+                            updateItem(item.id, 'bullets', updatedBullets);
+                          }}
+                          className="flex-grow input-field py-1"
+                          placeholder="Bullet point"
+                        />
+                        <div className="flex space-x-1">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updatedBullets = [...item.bullets];
+                              updatedBullets.splice(index, 1);
+                              updateItem(item.id, 'bullets', updatedBullets);
+                            }}
+                            className="p-1 text-red-600 hover:text-red-800"
+                            aria-label="Delete bullet"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                            </svg>
+                          </button>
+                          <button
+                            type="button"
+                            className="p-1 text-purple-600 hover:text-purple-800"
+                            aria-label="Generate with AI"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                              <path d="M13.5 9.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 1 0v-3a.5.5 0 0 0-.5-.5z"/>
+                              <path d="M10 2.5c-1.8 0-3.5.9-4.6 2.4v-.9H4.3v.8c-1.1 1.5-1.7 3.4-1.7 5.2 0 4.9 4 8.9 8.9 8.9s8.9-4 8.9-8.9-4-8.9-8.9-8.9h-.5zM5.8 9.6c0-.6.5-1.1 1.1-1.1s1.1.5 1.1 1.1-.5 1.1-1.1 1.1-1.1-.5-1.1-1.1zm6.3 0c0-.6.5-1.1 1.1-1.1s1.1.5 1.1 1.1-.5 1.1-1.1 1.1-1.1-.5-1.1-1.1zM10 15.3c-2.3 0-4.3-1.6-4.8-3.7h9.6c-.5 2.1-2.5 3.7-4.8 3.7z"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}

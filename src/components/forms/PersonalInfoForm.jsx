@@ -111,6 +111,12 @@ function PersonalInfoForm({ data, onChange }) {
           className="input-field w-full"
           placeholder="Brief overview of your professional background and key strengths"
         ></textarea>
+        <button
+          type="button"
+          className="mt-2 px-3 py-1 bg-purple-600 text-white text-sm rounded hover:bg-purple-700 transition-colors"
+        >
+          Generate with AI
+        </button>
       </div>
     </div>
   );

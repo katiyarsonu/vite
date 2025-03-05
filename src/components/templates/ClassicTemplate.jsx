@@ -217,8 +217,8 @@ const ClassicTemplate = ({ data, themeOptions, sectionOrder }) => {
     } else if (sectionId === 'education') {
       return <EducationSection education={education} themeOptions={themeOptions} />;
     } else if (sectionId.startsWith('customSection-')) {
-      const sectionId = sectionId.replace('customSection-', '');
-      const section = customSections.find(s => s.id === sectionId);
+      const customSectionId = sectionId.replace('customSection-', '');
+      const section = customSections.find(s => s.id === customSectionId);
       if (section) {
         return <CustomSection section={section} themeOptions={themeOptions} />;
       }

@@ -76,7 +76,7 @@ function PersonalInfoForm({ data, onChange }) {
           onChange={handleChange}
           className="input-field w-full"
           placeholder="(123) 456-7890"
-          pattern="^[0-9-+\s()]*$"
+          pattern="[0-9\-+\s()]*"
           required
         />
       </div>

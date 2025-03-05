@@ -193,6 +193,13 @@ const useResumeStore = create((set) => ({
     }))
   ],
   isSidebarCollapsed: false,
+  activeTargetSection: null,
+  pageMargins: {
+    top: 20,
+    bottom: 20,
+    left: 20,
+    right: 20
+  },
 
   updatePersonalInfo: (personalInfo) => 
     set((state) => ({
@@ -256,6 +263,16 @@ const useResumeStore = create((set) => ({
   toggleSidebar: () =>
     set((state) => ({
       isSidebarCollapsed: !state.isSidebarCollapsed
+    })),
+    
+  setActiveTargetSection: (sectionId) =>
+    set(() => ({
+      activeTargetSection: sectionId
+    })),
+    
+  updatePageMargins: (margins) =>
+    set((state) => ({
+      pageMargins: { ...state.pageMargins, ...margins }
     }))
 }))
 

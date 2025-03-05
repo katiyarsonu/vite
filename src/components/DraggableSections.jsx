@@ -17,7 +17,6 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import { FaBars } from 'react-icons/fa'
 import { useState } from 'react'
-import useResumeStore from '../store/resumeStore'
 
 function SortableItem({ id, title }) {
   const {

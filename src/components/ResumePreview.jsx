@@ -30,18 +30,18 @@ function ResumePreview({ template, themeOptions }) {
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Resume Preview</h2>
         <div className="flex gap-2">
           <button 
             onClick={() => toPDF()}
-            className="btn btn-primary"
+            className="btn bg-blue-600 text-white hover:bg-blue-700"
           >
             Download PDF
           </button>
         </div>
       </div>
-
+      
       <div 
         ref={targetRef}
         className="resume-preview-container a4"
@@ -57,13 +57,8 @@ function ResumePreview({ template, themeOptions }) {
       >
         {renderTemplate()}
       </div>
-
-      <div className="mt-4 flex flex-col sm:flex-row items-center gap-4 justify-between border-t border-gray-100 pt-4">
-        <div>
-          <p className="text-sm text-gray-500">Share your resume with the world</p>
-        </div>
-        <DeployButton />
-      </div>
+      
+      <DeployButton />
     </div>
   )
 }

@@ -31,7 +31,7 @@ function ResumePreview({ template, themeOptions }) {
   return (
     <div className="bg-white shadow-md rounded-lg p-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">Resume Preview</h2>
+        <h2 className="text-xl font-bold">Preview</h2>
         <div className="flex gap-2">
           <button 
             onClick={() => toPDF()}
@@ -55,6 +55,9 @@ function ResumePreview({ template, themeOptions }) {
               : 'Roboto Mono, monospace'
         }}
       >
+        <div className="text-center py-2 bg-gray-100 text-gray-800 text-sm">
+          Resume Builder
+        </div>
         {renderTemplate()}
       </div>
       
